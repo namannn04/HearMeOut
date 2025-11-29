@@ -7,6 +7,24 @@ import { ThemeToggle } from '@/components/theme-toggle'
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault()
+    const element = document.getElementById(targetId)
+    if (element) {
+      const offset = 80 // Height of navbar
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - offset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+      
+      // Close mobile menu after click
+      setIsOpen(false)
+    }
+  }
+
   return (
     <header className="fixed top-0 w-full bg-background/95 backdrop-blur-sm border-b border-border z-50">
       <nav className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -18,22 +36,39 @@ export function Navbar() {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          <a href="#features" className="text-foreground hover:text-primary transition-colors">
+          <a 
+            href="#features" 
+            onClick={(e) => handleSmoothScroll(e, 'features')}
+            className="text-foreground hover:text-primary transition-colors cursor-pointer"
+          >
             Features
           </a>
-          <a href="#how-it-works" className="text-foreground hover:text-primary transition-colors">
+          <a 
+            href="#how-it-works" 
+            onClick={(e) => handleSmoothScroll(e, 'how-it-works')}
+            className="text-foreground hover:text-primary transition-colors cursor-pointer"
+          >
             How It Works
           </a>
-          <a href="#cta" className="text-foreground hover:text-primary transition-colors">
+          <a 
+            href="#cta" 
+            onClick={(e) => handleSmoothScroll(e, 'cta')}
+            className="text-foreground hover:text-primary transition-colors cursor-pointer"
+          >
             About
           </a>
+          <Link href="/auth/login" className="text-foreground hover:text-primary transition-colors">
+            Login
+          </Link>
         </div>
 
         <div className="flex items-center gap-4">
           <ThemeToggle />
-          <button className="hidden md:block px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity">
-            Get Started
-          </button>
+          <Link href="/onboarding">
+            <button className="hidden md:block px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity cursor-pointer">
+              Get Started
+            </button>
+          </Link>
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden p-2 hover:bg-muted rounded-lg transition-colors"
@@ -47,18 +82,35 @@ export function Navbar() {
         {isOpen && (
           <div className="absolute top-full left-0 right-0 bg-background border-b border-border md:hidden">
             <div className="flex flex-col gap-4 p-4">
-              <a href="#features" className="text-foreground hover:text-primary transition-colors">
+              <a 
+                href="#features" 
+                onClick={(e) => handleSmoothScroll(e, 'features')}
+                className="text-foreground hover:text-primary transition-colors cursor-pointer"
+              >
                 Features
               </a>
-              <a href="#how-it-works" className="text-foreground hover:text-primary transition-colors">
+              <a 
+                href="#how-it-works" 
+                onClick={(e) => handleSmoothScroll(e, 'how-it-works')}
+                className="text-foreground hover:text-primary transition-colors cursor-pointer"
+              >
                 How It Works
               </a>
-              <a href="#cta" className="text-foreground hover:text-primary transition-colors">
+              <a 
+                href="#cta" 
+                onClick={(e) => handleSmoothScroll(e, 'cta')}
+                className="text-foreground hover:text-primary transition-colors cursor-pointer"
+              >
                 About
               </a>
-              <button className="w-full px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity">
-                Get Started
-              </button>
+              <Link href="/auth/login" onClick={() => setIsOpen(false)} className="text-foreground hover:text-primary transition-colors">
+                Login
+              </Link>
+              <Link href="/onboarding" onClick={() => setIsOpen(false)}>
+                <button className="w-full px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity cursor-pointer">
+                  Get Started
+                </button>
+              </Link>
             </div>
           </div>
         )}

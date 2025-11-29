@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 export function HeroSection() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -29,12 +30,16 @@ export function HeroSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-            <button className="px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold hover:opacity-90 transition-opacity transform hover:scale-105 duration-200">
-              Start Sharing
-            </button>
-            <button className="px-8 py-4 bg-card border border-border text-foreground rounded-full font-semibold hover:bg-muted transition-colors">
-              Start Listening
-            </button>
+            <Link href="/auth/signup?role=speaker">
+              <button className="px-8 py-4 bg-primary text-primary-foreground rounded-full font-semibold hover:opacity-90 transition-opacity transform hover:scale-105 duration-200 cursor-pointer">
+                Start Sharing
+              </button>
+            </Link>
+            <Link href="/auth/signup?role=listener">
+              <button className="px-8 py-4 bg-card border border-border text-foreground rounded-full font-semibold hover:bg-muted transition-colors cursor-pointer hover:scale-105">
+                Start Listening
+              </button>
+            </Link>
           </div>
         </div>
 
